@@ -21,9 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import sys
-
 import Adafruit_DHT
-
 
 # Parse command line parameters.
 sensor_args = { '11': Adafruit_DHT.DHT11,
@@ -72,19 +70,15 @@ def post_to_mcs(payload):
 	print( response.status, response.reason, json.dumps(payload), time.strftime("%c")) 
 	data = response.read() 
 	conn.close()
-  
-  
-
+	
 while True:
-h0, t0= Adafruit_DHT.read_retry(sensor, pin)
-if h0 is not None and t0 is not None:
-print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(t0, h0))
-
-	payload = {"datapoints":[{"dataChnId":"Humidity","values":{"value":h0}},
-		{"dataChnId":"Temperature","values":{"value":t0}}]} 
-	post_to_mcs(payload)
-	time.sleep(10) 
-
-else:
-print('Failed to get reading. Try again!')
-sys.exit(1)
+	h0, t0= Adafruit_DHT.read_retry(sensor, pin)
+	if h0 is not None and t0 is not None:
+		print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(t0, h0))
+		payload = {"datapoints":[{"dataChnId":"Humidity","values":{"value":h0}},{"dataChnId":"Temperature","values":{"value":t0}}]} 
+		post_to_mcs(payload)
+		time.sleep(10) 
+	else:
+		print('Failed to get reading. Try again!')
+		sys.exit(1)
+		
