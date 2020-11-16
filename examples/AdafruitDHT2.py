@@ -51,7 +51,7 @@ humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 import time
 import sys
 import http.client as http
-Import urllib
+import urllib
 import json
 deviceId = "DpLgmUKd"
 deviceKey = "M4d8GsjbU037sDNe"
